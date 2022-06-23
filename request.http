@@ -1,0 +1,12 @@
+POST http://localhost:5000/kafka/pushToConsumers HTTP/1.1
+content-type: application/json
+
+{
+    "productId": 1000,
+    "value": 100.0,
+    "paymentData": {
+        "paymentId": "1111",
+        "paymentType": "credit_card",
+        "paymentAmount": 100.0
+    }
+}
