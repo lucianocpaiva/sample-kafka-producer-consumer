@@ -1,23 +1,24 @@
 version: "3.9"
 services:
 
-  producer:
-    build: producer/.
-    container_name: producer
-    entrypoint: ["/bin/bash", "-c", "python3 producer/app.py"]
+  sales-api:
+    build: sales-api/.
+    container_name: sales-api
+    entrypoint: ["/bin/bash", "-c", "python3 sales-api/app.py"]
     ports:
       - "5000:5000"
     volumes:
       - .:/app/
     environment:
       KAFKA_SERVER: 'kafka:9092'
+      TOPIC_SALES: 'sales'
     depends_on:
       kafka:
         condition: service_healthy
   
-  consumer01:
-    build: consumer01/.
-    container_name: consumer01
+  payment-service:
+    build: payment-service/.
+    container_name: payment
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
     volumes:
       - .:/app/
@@ -26,10 +27,11 @@ services:
         condition: service_healthy
     environment:
       KAFKA_SERVER: 'kafka:9092'
+      TOPIC_SALES: 'sales'
   
-  consumer02:
-    build: consumer02/.
-    container_name: consumer02
+  inventory-service:
+    build: inventory-service/.
+    container_name: inventory
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
     volumes:
       - .:/app/
@@ -38,6 +40,7 @@ services:
         condition: service_healthy
     environment:
       KAFKA_SERVER: 'kafka:9092'
+      TOPIC_SALES: 'sales'
 
   ####### KAFKA #######
   zookeeper:

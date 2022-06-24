@@ -1,0 +1,2 @@
+Flask-RESTful==0.3.9
+kafka-python==2.0.2
