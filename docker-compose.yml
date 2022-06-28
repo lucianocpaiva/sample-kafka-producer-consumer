@@ -1,10 +1,10 @@
 version: "3.9"
 services:
 
-  sales-api:
-    build: sales-api/.
-    container_name: sales-api
-    entrypoint: ["/bin/bash", "-c", "python3 sales-api/app.py"]
+  sales:
+    build: sales/.
+    container_name: sales
+    entrypoint: ["/bin/bash", "-c", "python3 sales/app.py"]
     ports:
       - "5000:5000"
     volumes:
@@ -16,7 +16,7 @@ services:
       kafka:
         condition: service_healthy
   
-  payment-service:
+  payment:
     build: payment-service/.
     container_name: payment
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
@@ -29,7 +29,7 @@ services:
       KAFKA_SERVER: 'kafka:9092'
       TOPIC_SALES: 'sales'
   
-  inventory-service:
+  inventory:
     build: inventory-service/.
     container_name: inventory
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
