@@ -6,7 +6,7 @@ Exemplo de Pub/Sub usando Kafka.
 
 ### Execução
 <code>
-  docker-compose up -d
+  docker-compose up -d --build
 </code>
 
 ### logs

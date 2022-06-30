@@ -19,4 +19,5 @@ class Sale(Resource):
 
         send_to_processing(self.producer, self.topic, data)
 
-        return {'message': 'Pedido realizado!'}, 201
+        return {'productId': data['productId'], 
+                'message': 'Pedido realizado!'}, 201

@@ -3,13 +3,14 @@ package main
 import (
 	"fmt"
 	"os"
+
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
 func main() {
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "kafka:9092",
+		"bootstrap.servers": os.Getenv("KAFKA_SERVER"),
 		"group.id":          "group-inventory",
 		"auto.offset.reset": "earliest",
 	})
@@ -17,16 +18,22 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	
-	topic := os.Getenv("TOPIC_SALES")
-	
-	c.SubscribeTopics([]string{topic}, nil)
 
-	fmt.Printf("Waiting...\n")
+	topic := os.Getenv("TOPIC_SALES")
+
+	err = c.SubscribeTopics([]string{topic}, nil)
+
+	if err == nil {
+		fmt.Printf("Subscribed to topic: %s\n", topic)
+	} else {
+		fmt.Printf("Error subscribing to topic: %s %s\n", topic, err)
+	}
+
+	fmt.Printf("\nWaiting...\n")
 
 	for {
 		msg, err := c.ReadMessage(-1)
-		
+
 		if err == nil {
 			fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
 		} else {

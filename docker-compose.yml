@@ -1,10 +1,10 @@
 version: "3.9"
 services:
 
-  sales-api:
-    build: sales-api/.
-    container_name: sales-api
-    entrypoint: ["/bin/bash", "-c", "python3 sales-api/app.py"]
+  sales:
+    build: sales/.
+    container_name: sales
+    entrypoint: ["/bin/bash", "-c", "python3 sales/app.py"]
     ports:
       - "5000:5000"
     volumes:
@@ -16,7 +16,7 @@ services:
       kafka:
         condition: service_healthy
   
-  payment-service:
+  payment:
     build: payment-service/.
     container_name: payment
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
@@ -29,7 +29,7 @@ services:
       KAFKA_SERVER: 'kafka:9092'
       TOPIC_SALES: 'sales'
   
-  inventory-service:
+  inventory:
     build: inventory-service/.
     container_name: inventory
     entrypoint: ["go","run", "-tags", "musl",  "app.go"]
@@ -70,6 +70,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,OUTSIDE://localhost:9094
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       
     volumes:
       - kafka-data:/var/lib/kafka/data:Z
