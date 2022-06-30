@@ -10,9 +10,9 @@ import (
 func main() {
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
-		"bootstrap.servers": "kafka:9092",
+		"bootstrap.servers": os.Getenv("KAFKA_SERVER"),
 		"group.id":          "group-payment",
-		"auto.offset.reset": "beginning",
+		"auto.offset.reset": "earliest",
 	})
 
 	if err != nil {
