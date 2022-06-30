@@ -11,7 +11,7 @@ func main() {
 
 	c, err := kafka.NewConsumer(&kafka.ConfigMap{
 		"bootstrap.servers": "kafka:9092",
-		"group.id":          "group-payment-1",
+		"group.id":          "group-payment",
 		"auto.offset.reset": "beginning",
 	})
 
@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	topic := os.Getenv("TOPIC_SALES")
+	topic := os.Getenv("TOPIC_ORDERS")
 
 	err = c.SubscribeTopics([]string{topic}, nil)
 

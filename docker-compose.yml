@@ -11,7 +11,7 @@ services:
       - .:/app/
     environment:
       KAFKA_SERVER: 'kafka:9092'
-      TOPIC_SALES: 'sales'
+      TOPIC_ORDERS: 'orders'
     depends_on:
       kafka:
         condition: service_healthy
@@ -27,7 +27,7 @@ services:
         condition: service_healthy
     environment:
       KAFKA_SERVER: 'kafka:9092'
-      TOPIC_SALES: 'sales'
+      TOPIC_ORDERS: 'orders'
   
   inventory:
     build: inventory-service/.
@@ -40,7 +40,7 @@ services:
         condition: service_healthy
     environment:
       KAFKA_SERVER: 'kafka:9092'
-      TOPIC_SALES: 'sales'
+      TOPIC_ORDERS: 'orders'
 
   ####### KAFKA #######
   zookeeper:

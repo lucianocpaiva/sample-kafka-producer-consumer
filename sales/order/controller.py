@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 from .service import send_to_processing
 
-class Sale(Resource):
+class Order(Resource):
  
     def __init__(self, **kwargs) -> None:
 

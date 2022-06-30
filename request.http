@@ -1,8 +1,8 @@
-POST http://localhost:5000/sales HTTP/1.1
+POST http://localhost:5000/orders HTTP/1.1
 content-type: application/json
 
 {
-    "productId": 2,
+    "productId": 1,
     "value": 100.0,
     "paymentData": {}
 }

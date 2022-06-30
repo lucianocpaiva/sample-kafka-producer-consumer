@@ -19,7 +19,7 @@ func main() {
 		panic(err)
 	}
 
-	topic := os.Getenv("TOPIC_SALES")
+	topic := os.Getenv("TOPIC_ORDERS")
 
 	err = c.SubscribeTopics([]string{topic}, nil)
 
@@ -35,7 +35,7 @@ func main() {
 		msg, err := c.ReadMessage(-1)
 
 		if err == nil {
-			fmt.Printf("Message on %s: %s\n", msg.TopicPartition, string(msg.Value))
+			fmt.Printf("\nMessage on %s: %s\n", msg.TopicPartition, string(msg.Value))
 		} else {
 			fmt.Printf("Consumer error: %v (%v)\n", err, msg)
 		}
